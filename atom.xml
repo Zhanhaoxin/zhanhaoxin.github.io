@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>New Boy</title>
+  
+  <subtitle>New Boy</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://www.zhanhaoxin.club/"/>
+  <updated>2019-10-04T06:04:56.182Z</updated>
+  <id>http://www.zhanhaoxin.club/</id>
+  
+  <author>
+    <name>Zhan Haoxin</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>北京的秋天</title>
+    <link href="http://www.zhanhaoxin.club/2019/10/04/bei-jing-de-qiu-tian/"/>
+    <id>http://www.zhanhaoxin.club/2019/10/04/bei-jing-de-qiu-tian/</id>
+    <published>2019-10-04T05:06:21.000Z</published>
+    <updated>2019-10-04T06:04:56.182Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;一场雨送走了北京的夏天，气温降下来了，开始变得有点冷，树叶依旧还是绿的，再过段时间树叶全部变成黄色的时候，就又到了一年里北方城市最美丽的时候。&lt;/p&gt;
+&lt;p&gt;小时候，看史铁生的《我与地坛》，脑海中北京的秋天是美的，去年在北京实习，树叶变黄之后也到地坛公园去坐了坐，真的好美。
+        
+      
+    
+    </summary>
+    
+    
+      <category term="随想" scheme="http://www.zhanhaoxin.club/categories/%E9%9A%8F%E6%83%B3/"/>
+    
+    
+      <category term="北京" scheme="http://www.zhanhaoxin.club/tags/%E5%8C%97%E4%BA%AC/"/>
+    
+      <category term="秋天" scheme="http://www.zhanhaoxin.club/tags/%E7%A7%8B%E5%A4%A9/"/>
+    
+  </entry>
+  
+</feed>
