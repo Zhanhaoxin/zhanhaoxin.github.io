@@ -4,15 +4,15 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Redis学习笔记, New Boy">
-    <meta name="description" content="Redis的“两大维度，三大主线”
+    <meta name="keywords" content="快学Scala——基础知识, New Boy">
+    <meta name="description" content="要点
+使用val声明一个常量，var声明一个变量。
 
-redis问题画像图
+Scala中变量和函数的类型总是写在变量和函数名的后面。例如：
+val greeting : String = null
+val greeting : Any = &#34;hello&#34;
 
-
-        document.querySelectorAll(&#39;.github-emoji&#39;)
-          .forEach(el =&gt; {
-          ">
+每行">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,7 +20,7 @@ redis问题画像图
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Redis学习笔记 | New Boy</title>
+    <title>快学Scala——基础知识 | New Boy</title>
     <link rel="icon" type="image/png" href="/conan.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -291,13 +291,13 @@ redis问题画像图
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2FScala&psig=AOvVaw1PM8SNp2PPuTI2qRybCpoh&ust=1626799522131000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIjni9PK7_ECFQAAAAAdAAAAABAD')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Redis学习笔记
+                        快学Scala——基础知识
                     </div>
                 </div>
             </div>
@@ -409,8 +409,8 @@ redis问题画像图
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Redis/">
-                                <span class="chip bg-color">Redis</span>
+                            <a href="/tags/Scala/">
+                                <span class="chip bg-color">Scala</span>
                             </a>
                         
                     </div>
@@ -421,8 +421,8 @@ redis问题画像图
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/学习笔记/" class="post-category">
-                                学习笔记
+                            <a href="/categories/Scala/" class="post-category">
+                                Scala
                             </a>
                         
                     </div>
@@ -433,7 +433,7 @@ redis问题画像图
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-05-02
+                    2019-09-03
                 </div>
 
                 
@@ -449,10 +449,171 @@ redis问题画像图
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Redis的“两大维度，三大主线”</p>
-<p><img src="https://static001.geekbang.org/resource/image/79/e7/79da7093ed998a99d9abe91e610b74e7.jpg" alt="img"></p>
-<p>redis问题画像图</p>
-<p><img src="https://static001.geekbang.org/resource/image/70/b4/70a5bc1ddc9e3579a2fcb8a5d44118b4.jpeg" alt="img"></p>
+                <h4 id="要点"><a href="#要点" class="headerlink" title="要点"></a><strong>要点</strong></h4><ol>
+<li><p>使用val声明一个常量，var声明一个变量。</p>
+</li>
+<li><p>Scala中变量和函数的类型总是写在变量和函数名的后面。例如：</p>
+<pre class=" language-scala"><code class="language-scala"><span class="token keyword">val</span> greeting <span class="token operator">:</span> <span class="token builtin">String</span> <span class="token operator">=</span> <span class="token keyword">null</span>
+<span class="token keyword">val</span> greeting <span class="token operator">:</span> <span class="token builtin">Any</span> <span class="token operator">=</span> <span class="token string">"hello"</span></code></pre>
+</li>
+<li><p>每行不需要使用分号结尾</p>
+</li>
+<li><p>不区分基本类型和引用类型，Byte、Char、Short、Int、Long、Float、Double和Boolean类型都是类。StringOps类中有对字符串的数百种操作。</p>
+</li>
+<li><p>Scala没有++操作符，需要使用+=：<br><code>counter += 1</code></p>
+</li>
+<li><p>Scala没有静态方法，有类似的特性叫做单例对象，通常，一个类对应一个伴生对象，伴生对象的方法类似于静态方法。</p>
+</li>
+<li><p>调用没有参数的方法的时候可以不带括号，例如：<br><code>"hello".distinct</code></p>
+</li>
+</ol>
+<hr>
+<h4 id="感受"><a href="#感受" class="headerlink" title="感受"></a><strong>感受</strong></h4><p>1.看了快学Scala的第一章，对scala的初始感觉是：觉得scala有点像python，对函数的调用和运算符的操作都比较简结，尤其是对BigNumber操作，不像Java那么繁琐。</p>
+<p>2.学会使用Scala doc查看API。</p>
+<hr>
+<p><strong>计划安排</strong></p>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th>重要程度</th>
+<th>计划完成时间</th>
+<th>实际完成时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1 基础</td>
+<td>高</td>
+<td>9.03</td>
+<td>9.03</td>
+</tr>
+<tr>
+<td>2 控制结构和函数</td>
+<td>高</td>
+<td>9.04</td>
+<td></td>
+</tr>
+<tr>
+<td>3 数组相关操作</td>
+<td>高</td>
+<td>9.04</td>
+<td></td>
+</tr>
+<tr>
+<td>4 映射和元组</td>
+<td>高</td>
+<td>9.04</td>
+<td></td>
+</tr>
+<tr>
+<td>5 类</td>
+<td>高</td>
+<td>9.05</td>
+<td></td>
+</tr>
+<tr>
+<td>6 对象</td>
+<td>高</td>
+<td>9.05</td>
+<td></td>
+</tr>
+<tr>
+<td>7 包和引入</td>
+<td>高</td>
+<td>9.05</td>
+<td></td>
+</tr>
+<tr>
+<td>8 继承</td>
+<td>高</td>
+<td>9.06</td>
+<td></td>
+</tr>
+<tr>
+<td>9   文件和正则表达式</td>
+<td>高</td>
+<td>9.06</td>
+<td></td>
+</tr>
+<tr>
+<td>10 特质</td>
+<td>高</td>
+<td>9.06</td>
+<td></td>
+</tr>
+<tr>
+<td>11 操作符</td>
+<td>高</td>
+<td>9.09</td>
+<td></td>
+</tr>
+<tr>
+<td>12 高阶函数</td>
+<td>中</td>
+<td>9.09</td>
+<td></td>
+</tr>
+<tr>
+<td>13 集合</td>
+<td>高</td>
+<td>9.09</td>
+<td></td>
+</tr>
+<tr>
+<td>14   模式匹配和样例类</td>
+<td>高</td>
+<td>9.10</td>
+<td></td>
+</tr>
+<tr>
+<td>15 注解</td>
+<td>中</td>
+<td>9.10</td>
+<td></td>
+</tr>
+<tr>
+<td>16 XML处理</td>
+<td>中</td>
+<td>9.10</td>
+<td></td>
+</tr>
+<tr>
+<td>17 类型参数</td>
+<td>中</td>
+<td>9.10</td>
+<td></td>
+</tr>
+<tr>
+<td>18 高级类型</td>
+<td>高</td>
+<td>9.11</td>
+<td></td>
+</tr>
+<tr>
+<td>19 解析</td>
+<td>中</td>
+<td>9.11</td>
+<td></td>
+</tr>
+<tr>
+<td>20 Actor</td>
+<td>低</td>
+<td>9.12</td>
+<td></td>
+</tr>
+<tr>
+<td>21   隐式转换和隐式参数</td>
+<td>中</td>
+<td>9.12</td>
+<td></td>
+</tr>
+<tr>
+<td>22 定界延续</td>
+<td>低</td>
+<td>9.12</td>
+<td></td>
+</tr>
+</tbody></table>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -631,8 +792,8 @@ redis问题画像图
                 </a>
             </div>
             <br/>
-            <a  href="/2021/05/02/redis-xue-xi-bi-ji/">
-                    《Redis学习笔记》
+            <a  href="/2019/09/03/kuai-xue-scala-ji-chu-zhi-shi/">
+                    《快学Scala——基础知识》
             </a> 由
             <a href="http://www.zhanhaoxin.club">
                 Zhan Haoxin
@@ -674,7 +835,7 @@ redis问题画像图
         repo: 'zhanhaoxin.github.io',
         owner: 'Zhanhaoxin',
         admin: "Zhanhaoxin",
-        id: '2021-05-02T13-53-44',
+        id: '2019-09-03T21-25-39',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -699,61 +860,6 @@ redis问题画像图
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2021/05/25/huan-cun-geng-xin-ce-lue/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="缓存更新策略">
-                        
-                        <span class="card-title">缓存更新策略</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            缓存更新策略一、Cache-Aside
-这是最常见的一种缓存应用模式，整个过程也很好理解。
-数据获取策略：
-
-应用先去查看缓存是否有所需数据；
-如果有，应用直接将缓存数据返回给请求方；
-如果没有，应用执行原始逻辑，例如查询数据库得到结果数据
-                        
-                    </div>
-                    <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-05-25
-                        </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/缓存/" class="post-category">
-                                    缓存
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/缓存更新策略/">
-                        <span class="chip bg-color">缓存更新策略</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
                 <a href="/2019/10/04/bei-jing-de-qiu-tian/">
                     <div class="card-image">
                         
@@ -770,9 +876,9 @@ redis问题画像图
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-04
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-10-04
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -794,6 +900,62 @@ redis问题画像图
                     
                     <a href="/tags/秋天/">
                         <span class="chip bg-color">秋天</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                本篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/09/03/kuai-xue-scala-ji-chu-zhi-shi/">
+                    <div class="card-image">
+                        
+                        <img src="https://www.google.com/url?sa=i&amp;url=https%3A%2F%2Fzh.wikipedia.org%2Fwiki%2FScala&amp;psig=AOvVaw1PM8SNp2PPuTI2qRybCpoh&amp;ust=1626799522131000&amp;source=images&amp;cd=vfe&amp;ved=0CAsQjRxqFwoTCIjni9PK7_ECFQAAAAAdAAAAABAD" class="responsive-img" alt="快学Scala——基础知识">
+                        
+                        <span class="card-title">快学Scala——基础知识</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            要点
+使用val声明一个常量，var声明一个变量。
+
+Scala中变量和函数的类型总是写在变量和函数名的后面。例如：
+val greeting : String = null
+val greeting : Any = "hello"
+
+每行
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-09-03
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Scala/" class="post-category">
+                                    Scala
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Scala/">
+                        <span class="chip bg-color">Scala</span>
                     </a>
                     
                 </div>
