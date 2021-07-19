@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title>缓存更新策略</title>
+      <link href="/2021/05/25/huan-cun-geng-xin-ce-lue/"/>
+      <url>/2021/05/25/huan-cun-geng-xin-ce-lue/</url>
+      
+        <content type="html"><![CDATA[<h1 id="缓存更新策略"><a href="#缓存更新策略" class="headerlink" title="缓存更新策略"></a>缓存更新策略</h1><p>一、Cache-Aside</p><p>这是最常见的一种缓存应用模式，整个过程也很好理解。</p><p>数据获取策略：</p><ul><li>应用先去查看缓存是否有所需数据；</li><li>如果有，应用直接将缓存数据返回给请求方；</li><li>如果没有，应用执行原始逻辑，例如查询数据库得到结果数据；</li><li>应用将结果数据写入缓存。</li></ul><p><img src="/Users/haoxinzhan/Blog/source/_posts/%E7%BC%93%E5%AD%98%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5/Cache-Aside.png" alt="Cache-Aside"></p><img src="/2021/05/25/huan-cun-geng-xin-ce-lue/Cache-Aside.png" title="Cache-Aside"><p>我们见到的多数缓存，例如前面提到的拦截过滤器中的缓存，基本上都是按照这种方式来配置和使用的。</p><p>数据读取的异常情形：</p><ul><li>如果数据库读取异常，直接返回失败，没有数据不一致的情况发生；</li><li>如果数据库读取成功，但是缓存写入失败，那么下一次同一数据的访问还将继续尝试写入，因此这时也没有不一致的情况发生。</li></ul><p>可见，这两种异常情形都是“安全”的。</p><p>数据更新策略：</p><ul><li><p>应用先更新数据库；</p></li><li><p>应用再令缓存失效。</p></li></ul><p>这里，避免踩坑的关键点有两个：</p><p>数据更新的这个策略，通常来说，最重要的一点是<strong>必须先更新数据库，而不是先令缓存失效</strong>，即这个顺序不能倒过来。原因在于，如果先令缓存失效，那么在数据库更新成功前，如果有另外一个请求访问了缓存，发现缓存数据库已经失效，于是就会按照数据获取策略，从数据库中使用这个已经陈旧的数值去更新缓存中的数据，这就导致这个过期的数据会长期存在于缓存中，最终导致数据不一致的严重问题。</p><p>如果先令缓存失效，再更新数据库，为什么会导致问题：</p><p><img src="/Users/haoxinzhan/Blog/source/_posts/%E7%BC%93%E5%AD%98%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5/%E5%85%88%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88%E5%86%8D%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE%E5%BA%93.png" alt="先缓存失效再更新数据库"></p><p>第二个关键点是，<strong>数据库更新以后，需要令缓存失效，而不是更新缓存为数据库的最新值</strong>。为什么呢？你想一下，如果两个几乎同时发出的请求分别要更新数据库中的值为 A 和 B，如果结果是 B 的更新晚于 A，那么数据库中的最终值是 B。但是，如果在数据库更新后去更新缓存，而不是令缓存失效，那么缓存中的数据就有可能是 A，而不是 B。因为数据库虽然是“更新为 A”在“更新为 B”之前发生，但如果不做特殊的跨存储系统的事务控制，缓存的更新顺序就未必会遵从“A 先于 B”这个规则，这就会导致这个缓存中的数据会是一个长期错误的值 A。</p><p>这张图可以帮你理解，如果是更新缓存为数据库最新值，而不是令缓存失效，为什么会产生问题：</p><p><img src="/Users/haoxinzhan/Blog/source/_posts/%E7%BC%93%E5%AD%98%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5/%E5%85%88%E6%9B%B4%E6%96%B0%E7%BC%93%E5%AD%98%E8%80%8C%E4%B8%8D%E6%98%AF%E5%85%88%E8%AE%A9%E5%85%B6%E5%A4%B1%E6%95%88.png" alt="img"></p><p>如果是令缓存失效，这个问题就消失了。因为 B 是后写入数据库的，那么在 B 写入数据库以后，无论是写入 B 的请求让缓存失效，还是并发的竞争情形下写入 A 的请求让缓存失效，缓存反正都是失效了。那么下一次的访问就会从数据库中取得最新的值，并写入缓存，这个值就一定是 B。</p><p><strong>这两个关键点非常重要，而且不当使用引起的错误还非常常见</strong>，希望你可以完全理解它们。</p><p>数据更新的异常情形：</p><ul><li>如果数据库操作失败，那么直接返回失败，没有数据不一致的情况发生；</li><li>如果数据库操作成功，但是缓存失效操作失败，这个问题很难发生，但一旦发生就会非常麻烦，缓存中的数据是过期数据，需要特殊处理来纠正。</li></ul><p>二、Read-Through</p><p>这种情况下缓存系统彻底变成了它身后数据库的代理，二者成为了一个整体，应用的请求访问只能看到缓存的返回数据，而数据库系统对它是透明的。</p><p><img src="/Users/haoxinzhan/Blog/source/_posts/%E7%BC%93%E5%AD%98%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5/Read-Through.png" alt="img"></p><p>有的框架提供的内置缓存，例如一些 ORM 框架，就是按这种 Read-Through 和 Write-Through 来实现的。</p><p>数据获取策略：</p><ul><li>应用向缓存要求数据；</li><li>如果缓存中有数据，返回给应用，应用再将数据返回；</li><li>如果没有，缓存查询数据库，并将结果写入自己；</li><li>缓存将数据返回给应用。</li></ul><p>数据读取异常的情况分析和 Cache-Aside 类似，没有数据不一致的情况发生。</p><p>三、Write-Through</p><p>和 Read-Through 类似，图示同上，但 Write-Through 是用来处理数据更新的场景。</p><p>数据更新策略：</p><ul><li>应用要求缓存更新数据；</li><li>如果缓存中有对应数据，先更新该数据；</li><li>缓存再更新数据库中的数据；</li><li>缓存告知应用更新完成。</li></ul><p>这里的一个关键点是，<strong>缓存系统需要自己内部保证并发场景下，缓存更新的顺序要和数据库更新的顺序一致</strong>。比如说，两个请求分别要把数据更新为 A 和 B，那么如果 B 后写入数据库，缓存中最后的结果也必须是 B。这个一致性可以用乐观锁等方式来保证。</p><p>数据更新的异常情形：</p><ul><li><p>如果缓存更新失败，直接返回失败，没有数据不一致的情况发生；</p></li><li><p>如果缓存更新成功，数据库更新失败，这种情况下需要回滚缓存中的更新，或者干脆从缓存中删除该数据。</p></li></ul><p>还有一种和 Write-Through 非常类似的数据更新模式，叫做 Write-Around。它们的区别在于 Write-Through 需要更新缓存和数据库，而  Write-Around 只更新数据库（缓存的更新完全留给读操作）。</p><p>四、Write-Back</p><p>对于 Write-Back 模式来说，更新操作发生的时候，数据写入缓存之后就立即返回了，而数据库的更新异步完成。这种模式在一些分布式系统中很常见。</p><p>这种方式带来的最大好处是拥有最大的请求吞吐量，并且操作非常迅速，数据库的更新甚至可以批量进行，因而拥有杰出的更新效率以及稳定的速率，这个缓存就像是一个写入的缓冲，可以平滑访问尖峰。另外，对于存在数据库短时间无法访问的问题，它也能够很好地处理。</p><p>但是它的弊端也很明显，异步更新一定会存在着不可避免的一致性问题，并且也存在着数据丢失的风险（数据写入缓存但还未入库时，如果宕机了，那么这些数据就丢失了）。</p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 缓存 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> -缓存更新策略 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Redis学习笔记</title>
+      <link href="/2021/05/02/redis-xue-xi-bi-ji/"/>
+      <url>/2021/05/02/redis-xue-xi-bi-ji/</url>
+      
+        <content type="html"><![CDATA[<p>Redis的“两大维度，三大主线”</p><p><img src="https://static001.geekbang.org/resource/image/79/e7/79da7093ed998a99d9abe91e610b74e7.jpg" alt="img"></p><p>redis问题画像图</p><p><img src="https://static001.geekbang.org/resource/image/70/b4/70a5bc1ddc9e3579a2fcb8a5d44118b4.jpeg" alt="img"></p><script>        document.querySelectorAll('.github-emoji')          .forEach(el => {            if (!el.dataset.src) { return; }            const img = document.createElement('img');            img.style = 'display:none !important;';            img.src = el.dataset.src;            img.addEventListener('error', () => {              img.remove();              el.style.color = 'inherit';              el.style.backgroundImage = 'none';              el.style.background = 'none';            });            img.addEventListener('load', () => {              img.remove();            });            document.body.appendChild(img);          });      </script>]]></content>
+      
+      
+      <categories>
+          
+          <category> 学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> -Redis </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>北京的秋天</title>
       <link href="/2019/10/04/bei-jing-de-qiu-tian/"/>
       <url>/2019/10/04/bei-jing-de-qiu-tian/</url>
