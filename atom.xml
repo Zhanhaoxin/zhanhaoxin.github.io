@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhanhaoxin.club/"/>
-  <updated>2021-07-19T16:58:57.583Z</updated>
+  <updated>2021-07-27T16:33:28.027Z</updated>
   <id>http://www.zhanhaoxin.club/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>正向代理和反向代理</title>
+    <link href="http://www.zhanhaoxin.club/2021/07/28/zheng-xiang-dai-li-he-fan-xiang-dai-li/"/>
+    <id>http://www.zhanhaoxin.club/2021/07/28/zheng-xiang-dai-li-he-fan-xiang-dai-li/</id>
+    <published>2021-07-27T16:07:47.000Z</published>
+    <updated>2021-07-27T16:33:28.027Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;正向代理&quot;&gt;&lt;a href=&quot;#正向代理&quot; class=&quot;headerlink&quot; title=&quot;正向代理&quot;&gt;&lt;/a&gt;正向代理&lt;/h2&gt;&lt;p&gt;正向代理（forward
+        
+      
+    
+    </summary>
+    
+    
+      <category term="计算机概念" scheme="http://www.zhanhaoxin.club/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%A6%82%E5%BF%B5/"/>
+    
+    
+      <category term="代理" scheme="http://www.zhanhaoxin.club/tags/%E4%BB%A3%E7%90%86/"/>
+    
+  </entry>
   
   <entry>
     <title>缓存更新策略</title>

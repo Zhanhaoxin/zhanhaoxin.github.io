@@ -4,14 +4,8 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="缓存更新策略, New Boy">
-    <meta name="description" content="缓存更新策略一、Cache-Aside
-这是最常见的一种缓存应用模式，整个过程也很好理解。
-数据获取策略：
-
-应用先去查看缓存是否有所需数据；
-如果有，应用直接将缓存数据返回给请求方；
-如果没有，应用执行原始逻辑，例如查询数据库得到结果数据">
+    <meta name="keywords" content="正向代理和反向代理, New Boy">
+    <meta name="description" content="正向代理正向代理（forward proxy）：”它代理的是客户端，代客户端发出请求”，是一个位于客户端和原始服务器(origin server)之间的服务器，为了从原始服务器取得内容，客户端向代理发送一个请求并指定目标(原始服务器)，然后">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>缓存更新策略 | New Boy</title>
+    <title>正向代理和反向代理 | New Boy</title>
     <link rel="icon" type="image/png" href="/conan.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -290,13 +284,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        缓存更新策略
+                        正向代理和反向代理
                     </div>
                 </div>
             </div>
@@ -408,8 +402,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/缓存更新策略/">
-                                <span class="chip bg-color">缓存更新策略</span>
+                            <a href="/tags/代理/">
+                                <span class="chip bg-color">代理</span>
                             </a>
                         
                     </div>
@@ -420,8 +414,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/缓存/" class="post-category">
-                                缓存
+                            <a href="/categories/计算机概念/" class="post-category">
+                                计算机概念
                             </a>
                         
                     </div>
@@ -432,7 +426,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-05-25
+                    2021-07-28
                 </div>
 
                 
@@ -448,82 +442,40 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="缓存更新策略"><a href="#缓存更新策略" class="headerlink" title="缓存更新策略"></a>缓存更新策略</h1><p>一、Cache-Aside</p>
-<p>这是最常见的一种缓存应用模式，整个过程也很好理解。</p>
-<p>数据获取策略：</p>
-<ul>
-<li>应用先去查看缓存是否有所需数据；</li>
-<li>如果有，应用直接将缓存数据返回给请求方；</li>
-<li>如果没有，应用执行原始逻辑，例如查询数据库得到结果数据；</li>
-<li>应用将结果数据写入缓存。</li>
-</ul>
-<img src="/2021/05/25/huan-cun-geng-xin-ce-lue/Cache-Aside.png" title="Cache-Aside">
+                <h2 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h2><p>正向代理（forward proxy）：”它<strong>代理的是客户端</strong>，代客户端发出请求”，是一个位于客户端和原始服务器(origin server)之间的服务器，为了从原始服务器取得内容，<strong>客户端向代理发送一个请求并指定目标(原始服务器)，然后代理向原始服务器转交请求并将获得的内容返回给客户端</strong>。客户端必须要进行一些特别的设置才能使用正向代理。</p>
+<p>正向代理最大的特点是<strong><u>客户端非常明确要访问的服务器地址；服务器只清楚请求来自哪个代理服务器，而不清楚来自哪个具体的客户端；正向代理模式屏蔽或者隐藏了真实客户端信息</u></strong>。</p>
+<img src="/2021/07/28/zheng-xiang-dai-li-he-fan-xiang-dai-li/image-20210728002118847.png" title="正向代理">
 
-<p>我们见到的多数缓存，例如前面提到的拦截过滤器中的缓存，基本上都是按照这种方式来配置和使用的。</p>
-<p>数据读取的异常情形：</p>
-<ul>
-<li>如果数据库读取异常，直接返回失败，没有数据不一致的情况发生；</li>
-<li>如果数据库读取成功，但是缓存写入失败，那么下一次同一数据的访问还将继续尝试写入，因此这时也没有不一致的情况发生。</li>
-</ul>
-<p>可见，这两种异常情形都是“安全”的。</p>
-<p>数据更新策略：</p>
-<ul>
-<li><p>应用先更新数据库；</p>
-</li>
-<li><p>应用再令缓存失效。</p>
-</li>
-</ul>
-<p>这里，避免踩坑的关键点有两个：</p>
-<p>数据更新的这个策略，通常来说，最重要的一点是<strong>必须先更新数据库，而不是先令缓存失效</strong>，即这个顺序不能倒过来。原因在于，如果先令缓存失效，那么在数据库更新成功前，如果有另外一个请求访问了缓存，发现缓存数据库已经失效，于是就会按照数据获取策略，从数据库中使用这个已经陈旧的数值去更新缓存中的数据，这就导致这个过期的数据会长期存在于缓存中，最终导致数据不一致的严重问题。</p>
-<p>如果先令缓存失效，再更新数据库，为什么会导致问题：</p>
-<img src="/2021/05/25/huan-cun-geng-xin-ce-lue/先缓存失效再更新数据库.png" title="先缓存失效再更新数据库">
 
-<p>第二个关键点是，<strong>数据库更新以后，需要令缓存失效，而不是更新缓存为数据库的最新值</strong>。为什么呢？你想一下，如果两个几乎同时发出的请求分别要更新数据库中的值为 A 和 B，如果结果是 B 的更新晚于 A，那么数据库中的最终值是 B。但是，如果在数据库更新后去更新缓存，而不是令缓存失效，那么缓存中的数据就有可能是 A，而不是 B。因为数据库虽然是“更新为 A”在“更新为 B”之前发生，但如果不做特殊的跨存储系统的事务控制，缓存的更新顺序就未必会遵从“A 先于 B”这个规则，这就会导致这个缓存中的数据会是一个长期错误的值 A。</p>
-<p>这张图可以帮你理解，如果是更新缓存为数据库最新值，而不是令缓存失效，为什么会产生问题：</p>
-<img src="/2021/05/25/huan-cun-geng-xin-ce-lue/先更新缓存而不是先让其失效.png" title="先更新缓存而不是先让其失效">
 
-<p>如果是令缓存失效，这个问题就消失了。因为 B 是后写入数据库的，那么在 B 写入数据库以后，无论是写入 B 的请求让缓存失效，还是并发的竞争情形下写入 A 的请求让缓存失效，缓存反正都是失效了。那么下一次的访问就会从数据库中取得最新的值，并写入缓存，这个值就一定是 B。</p>
-<p><strong>这两个关键点非常重要，而且不当使用引起的错误还非常常见</strong>，希望你可以完全理解它们。</p>
-<p>数据更新的异常情形：</p>
-<ul>
-<li>如果数据库操作失败，那么直接返回失败，没有数据不一致的情况发生；</li>
-<li>如果数据库操作成功，但是缓存失效操作失败，这个问题很难发生，但一旦发生就会非常麻烦，缓存中的数据是过期数据，需要特殊处理来纠正。</li>
-</ul>
-<p>二、Read-Through</p>
-<p>这种情况下缓存系统彻底变成了它身后数据库的代理，二者成为了一个整体，应用的请求访问只能看到缓存的返回数据，而数据库系统对它是透明的。</p>
-<img src="/2021/05/25/huan-cun-geng-xin-ce-lue/Read-Through.png" title="Read-Through">
 
-<p>有的框架提供的内置缓存，例如一些 ORM 框架，就是按这种 Read-Through 和 Write-Through 来实现的。</p>
-<p>数据获取策略：</p>
+<p>正向代理的用途：</p>
 <ul>
-<li>应用向缓存要求数据；</li>
-<li>如果缓存中有数据，返回给应用，应用再将数据返回；</li>
-<li>如果没有，缓存查询数据库，并将结果写入自己；</li>
-<li>缓存将数据返回给应用。</li>
+<li>访问原来无法访问的资源，如Google </li>
+<li>可以做缓存，加速访问资源 </li>
+<li>对客户端访问授权，上网进行认证 </li>
+<li>代理可以记录用户访问记录（上网行为管理），对外隐藏用户信息</li>
 </ul>
-<p>数据读取异常的情况分析和 Cache-Aside 类似，没有数据不一致的情况发生。</p>
-<p>三、Write-Through</p>
-<p>和 Read-Through 类似，图示同上，但 Write-Through 是用来处理数据更新的场景。</p>
-<p>数据更新策略：</p>
+<p>正向代理的例子：Proxy、跳板机、租房中介、火车票代售点……</p>
+<hr>
+<p>##反向代理</p>
+<p>反向代理（reverse proxy）：是指以代理服务器来接受internet上的连接请求，然后按照一定的规则分发给内部网络上的业务处理服务器进行处理，并将从服务器上得到的结果返回给internet上请求连接的客户端，此时代理服务器对外就表现为一个反向代理服务器。此时请求的来源也就是客户端是明确的，但是请求具体由哪台服务器处理的并不明确。</p>
+<p><strong>客户端是无感知代理的存在的，反向代理对外都是透明的，访问者并不知道自己访问的是一个代理。因为客户端不需要任何配置就可以访问。</strong></p>
+<img src="/2021/07/28/zheng-xiang-dai-li-he-fan-xiang-dai-li/image-20210728002327875.png" title="反向代理">
+
+<p>反向代理的用途： </p>
 <ul>
-<li>应用要求缓存更新数据；</li>
-<li>如果缓存中有对应数据，先更新该数据；</li>
-<li>缓存再更新数据库中的数据；</li>
-<li>缓存告知应用更新完成。</li>
+<li>保证内网的安全，通常将反向代理作为公网访问地址，Web服务器是内网 </li>
+<li>负载均衡，通过反向代理服务器来优化网站的负载</li>
 </ul>
-<p>这里的一个关键点是，<strong>缓存系统需要自己内部保证并发场景下，缓存更新的顺序要和数据库更新的顺序一致</strong>。比如说，两个请求分别要把数据更新为 A 和 B，那么如果 B 后写入数据库，缓存中最后的结果也必须是 B。这个一致性可以用乐观锁等方式来保证。</p>
-<p>数据更新的异常情形：</p>
-<ul>
-<li><p>如果缓存更新失败，直接返回失败，没有数据不一致的情况发生；</p>
-</li>
-<li><p>如果缓存更新成功，数据库更新失败，这种情况下需要回滚缓存中的更新，或者干脆从缓存中删除该数据。</p>
-</li>
-</ul>
-<p>还有一种和 Write-Through 非常类似的数据更新模式，叫做 Write-Around。它们的区别在于 Write-Through 需要更新缓存和数据库，而  Write-Around 只更新数据库（缓存的更新完全留给读操作）。</p>
-<p>四、Write-Back</p>
-<p>对于 Write-Back 模式来说，更新操作发生的时候，数据写入缓存之后就立即返回了，而数据库的更新异步完成。这种模式在一些分布式系统中很常见。</p>
-<p>这种方式带来的最大好处是拥有最大的请求吞吐量，并且操作非常迅速，数据库的更新甚至可以批量进行，因而拥有杰出的更新效率以及稳定的速率，这个缓存就像是一个写入的缓冲，可以平滑访问尖峰。另外，对于存在数据库短时间无法访问的问题，它也能够很好地处理。</p>
-<p>但是它的弊端也很明显，异步更新一定会存在着不可避免的一致性问题，并且也存在着数据丢失的风险（数据写入缓存但还未入库时，如果宕机了，那么这些数据就丢失了）。</p>
+<hr>
+<h2 id="正向代理和反向代理的区别点总结"><a href="#正向代理和反向代理的区别点总结" class="headerlink" title="正向代理和反向代理的区别点总结"></a>正向代理和反向代理的区别点总结</h2><p>虽然正向代理服务器和反向代理服务器所处的位置都是客户端和真实服务器之间，所做的事情也都是把客户端的请求转发给服务器，再把服务器的响应转发给客户端，但是二者之间还是有一定的差异的。</p>
+<ol>
+<li><strong>正向代理其实是客户端的代理</strong>，帮助客户端访问其无法访问的服务器资源。<strong>反向代理则是服务器的代理</strong>，帮助服务器做负载均衡，安全防护等。</li>
+<li><strong>正向代理一般是客户端架设的</strong>，比如在自己的机器上安装一个代理软件。而<strong>反向代理一般是服务器架设的</strong>，比如在自己的机器集群中部署一个反向代理服务器。</li>
+<li><strong>正向代理中，服务器不知道真正的客户端到底是谁</strong>，以为访问自己的就是真实的客户端。而在<strong>反向代理中，客户端不知道真正的服务器是谁</strong>，以为自己访问的就是真实的服务器。</li>
+<li>正向代理和反向代理的作用和目的不同。<strong>正向代理主要是用来解决访问限制问题。而反向代理则是提供负载均衡、安全防护等作用。二者均能提高访问速度。</strong></li>
+</ol>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -702,8 +654,8 @@
                 </a>
             </div>
             <br/>
-            <a  href="/2021/05/25/huan-cun-geng-xin-ce-lue/">
-                    《缓存更新策略》
+            <a  href="/2021/07/28/zheng-xiang-dai-li-he-fan-xiang-dai-li/">
+                    《正向代理和反向代理》
             </a> 由
             <a href="http://www.zhanhaoxin.club">
                 Zhan Haoxin
@@ -745,7 +697,7 @@
         repo: 'zhanhaoxin.github.io',
         owner: 'Zhanhaoxin',
         admin: "Zhanhaoxin",
-        id: '2021-05-25T23-42-19',
+        id: '2021-07-28T00-07-47',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -766,9 +718,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fas fa-chevron-left"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2021/07/28/zheng-xiang-dai-li-he-fan-xiang-dai-li/">
                     <div class="card-image">
@@ -786,9 +739,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-07-28
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-28
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -801,6 +754,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -819,38 +773,37 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/05/02/redis-xue-xi-bi-ji/">
+                <a href="/2021/05/25/huan-cun-geng-xin-ce-lue/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Redis学习笔记">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="缓存更新策略">
                         
-                        <span class="card-title">Redis学习笔记</span>
+                        <span class="card-title">缓存更新策略</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Redis的“两大维度，三大主线”
+                            缓存更新策略一、Cache-Aside
+这是最常见的一种缓存应用模式，整个过程也很好理解。
+数据获取策略：
 
-redis问题画像图
-
-
-        document.querySelectorAll('.github-emoji')
-          .forEach(el => {
-          
+应用先去查看缓存是否有所需数据；
+如果有，应用直接将缓存数据返回给请求方；
+如果没有，应用执行原始逻辑，例如查询数据库得到结果数据
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-02
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-25
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/学习笔记/" class="post-category">
-                                    学习笔记
+                            <a href="/categories/缓存/" class="post-category">
+                                    缓存
                                 </a>
                             
                             
@@ -860,8 +813,8 @@ redis问题画像图
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Redis/">
-                        <span class="chip bg-color">Redis</span>
+                    <a href="/tags/缓存更新策略/">
+                        <span class="chip bg-color">缓存更新策略</span>
                     </a>
                     
                 </div>
