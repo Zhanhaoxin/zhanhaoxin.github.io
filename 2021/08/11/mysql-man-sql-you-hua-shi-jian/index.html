@@ -451,8 +451,7 @@ MySQL 中提供了一个慢查询的日志记录功能，可以把查询 SQL 语
                 <h1 id="MySQL慢SQL优化实践"><a href="#MySQL慢SQL优化实践" class="headerlink" title="MySQL慢SQL优化实践"></a>MySQL慢SQL优化实践</h1><h2 id="一、如何知道哪些SQL是慢SQL"><a href="#一、如何知道哪些SQL是慢SQL" class="headerlink" title="一、如何知道哪些SQL是慢SQL?"></a>一、如何知道哪些SQL是慢SQL?</h2><p>定位执行效率比较低的SQL语句，可以通过<strong>慢查询日志</strong>来进行定位。</p>
 <p>MySQL 中提供了一个慢查询的日志记录功能，可以把<u>查询 SQL 语句时间大于多少秒的语句写入慢查询日志</u>，日常维护中可以通过慢查询日志的记录信息快速准确地判断问题所在。用 <strong>–log-slow-queries</strong> 选项启动时，mysqld 会写一个包含所有执行时间超过 long_query_time 秒的 SQL 语句的日志文件，通过查看这个日志文件定位效率较低的 SQL 。</p>
 <p>我们先查询 MySQL 慢查询日志是否开启：</p>
-<pre><code>show variables like "%slow%";</code></pre><p><img src="../PicBed/image-20210628155703611.png" alt="image-20210628155703611"></p>
-<p>慢查询日志会在查询结束以后才记录</p>
+<pre><code>show variables like "%slow%";</code></pre><p>慢查询日志会在查询结束以后才记录</p>
 <h2 id="二、通过-EXPLAIN-命令分析-SQL-的执行计划"><a href="#二、通过-EXPLAIN-命令分析-SQL-的执行计划" class="headerlink" title="二、通过 EXPLAIN 命令分析 SQL 的执行计划"></a>二、通过 EXPLAIN 命令分析 SQL 的执行计划</h2><h2 id="三、EXPLAIN-参数详解"><a href="#三、EXPLAIN-参数详解" class="headerlink" title="三、EXPLAIN 参数详解"></a>三、EXPLAIN 参数详解</h2><ol>
 <li><p>explain 包含的参数</p>
 <table>
@@ -519,13 +518,16 @@ MySQL 中提供了一个慢查询的日志记录功能，可以把查询 SQL 语
 <li><p>id参数</p>
 <ul>
 <li><p>Id相同: 执行顺序从上至下</p>
-<p><img src="/Users/haoxinzhan/Blog/source/_posts/MySQL%E6%85%A2SQL%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/16f73fe26adaae0d~tplv-t2oaga2asx-watermark-8696244.awebp.png" alt="id相同"></p>
+<img src="/2021/08/11/mysql-man-sql-you-hua-shi-jian/16f73fe26adaae0d~tplv-t2oaga2asx-watermark-8696244.awebp.png" title="id相同">
 </li>
 <li><p>Id不同: 如果是子查询，id的序号会递增，id的值越大优先级越高，越先被执行</p>
-<p><img src="/Users/haoxinzhan/Blog/source/_posts/MySQL%E6%85%A2SQL%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/16f73fe26afbac8b~tplv-t2oaga2asx-watermark.awebp" alt="id不同"></p>
+<img src="/2021/08/11/mysql-man-sql-you-hua-shi-jian/16f73fe26afbac8b~tplv-t2oaga2asx-watermark.awebp" title="id不同">
 </li>
 <li><p>id相同又不同: id如果相同，可以认为是一组，从上往下顺序执行，在所有组中，id值越大，优先级越高，越先执行</p>
-<p><img src="/Users/haoxinzhan/Blog/source/_posts/MySQL%E6%85%A2SQL%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/16f73fe26c3182b4~tplv-t2oaga2asx-watermark.awebp" alt="一张图搞定 explain"></p>
+<img src="/2021/08/11/mysql-man-sql-you-hua-shi-jian/16f73fe26c3182b4~tplv-t2oaga2asx-watermark.awebp" title="id相同又不同">
+
+
+
 </li>
 </ul>
 </li>
@@ -579,79 +581,100 @@ MySQL 中提供了一个慢查询的日志记录功能，可以把查询 SQL 语
 <li><p>table参数</p>
 <p>表示数据来自哪张表或者衍生表</p>
 </li>
+</ul>
+<ul>
 <li><p>partitions参数</p>
 <p>匹配的分区</p>
 </li>
+</ul>
+<ul>
 <li><p>type参数</p>
 <p><code>type</code> 字段比较重要, 它提供了判断查询是否高效的重要依据依据. 通过 <code>type</code> 字段, 我们判断此次查询是 <code>**全表扫描**</code> 还是 <code>**索引扫描**</code> 等。它的不同类型的性能由好到差分别是：</p>
 <table>
 <thead>
 <tr>
 <th>type参数取值</th>
-<th>含义</th>
+<th align="left">含义</th>
 </tr>
 </thead>
 <tbody><tr>
 <td><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_system" target="_blank" rel="noopener">system</a></td>
-<td>表中仅有一条数据时，该表的查询就像查询常量表一样</td>
+<td align="left">表中仅有一条数据时，该表的查询就像查询常量表一样</td>
 </tr>
 <tr>
 <td><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_const" target="_blank" rel="noopener">const</a></td>
-<td>当表中只有一条记录匹配时，比如使用了表主键（primary key）或者表唯一索引（unique index）进行查询</td>
+<td align="left">当表中只有一条记录匹配时，比如使用了表主键（primary key）或者表唯一索引（unique index）进行查询</td>
 </tr>
 <tr>
 <td><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_eq_ref" target="_blank" rel="noopener">eq_ref</a></td>
-<td>表示多表连接时使用表主键或者表唯一索引，比如 select A.text, B.text where A.ID = B.ID 这个查询语句，对于 A 表中的每一个 ID 行，B 表中都只能有唯一的 B.Id 来进行匹配时</td>
+<td align="left">表示多表连接时使用表主键或者表唯一索引，比如 select A.text, B.text where A.ID = B.ID 这个查询语句，对于 A 表中的每一个 ID 行，B 表中都只能有唯一的 B.Id 来进行匹配时</td>
 </tr>
 <tr>
 <td><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_ref" target="_blank" rel="noopener">ref</a></td>
-<td>这个类型不如上面的 eq-ref 快，因为它表示的是因为对于表 A 中扫描的每一行，表 C 中有几个可能的行，C.ID 不是唯一的</td>
+<td align="left">这个类型不如上面的 eq-ref 快，因为它表示的是因为对于表 A 中扫描的每一行，表 C 中有几个可能的行，C.ID 不是唯一的</td>
 </tr>
 <tr>
 <td><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_ref_or_null" target="_blank" rel="noopener">ref_or_null</a></td>
-<td>与 ref 类似，只不过这个选项包含对 NULL 的查询</td>
+<td align="left">与 ref 类似，只不过这个选项包含对 NULL 的查询</td>
 </tr>
 <tr>
 <td><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_index_merge" target="_blank" rel="noopener">index_merge</a></td>
-<td>查询语句使用了两个以上的索引，比如经常在有 and 和 or 关键字出现的场景，但是在由于读取索引过多导致其性能有可能还不如 range</td>
+<td align="left">查询语句使用了两个以上的索引，比如经常在有 and 和 or 关键字出现的场景，但是在由于读取索引过多导致其性能有可能还不如 range</td>
 </tr>
 <tr>
 <td><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_unique_subquery" target="_blank" rel="noopener">unique_subquery</a></td>
-<td>这个选项经常用在 in 关键字后面，子查询带有 where 关键字的子查询中，用 sql 来表示就是这样 value IN (SELECT primary_key FROM single_table WHERE some_expr)</td>
+<td align="left">这个选项经常用在 in 关键字后面，子查询带有 where 关键字的子查询中，用 sql 来表示就是这样 value IN (SELECT primary_key FROM single_table WHERE some_expr)</td>
 </tr>
 <tr>
 <td><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_range" target="_blank" rel="noopener">range</a></td>
-<td>引范围查询，常见于使用 =，&lt;&gt;，&gt;，&gt;=，&lt;，&lt;=，IS NULL，&lt;=&gt;，BETWEEN，IN() 或者 like 等运算符的查询中</td>
+<td align="left">引范围查询，常见于使用 =，&lt;&gt;，&gt;，&gt;=，&lt;，&lt;=，IS NULL，&lt;=&gt;，BETWEEN，IN() 或者 like 等运算符的查询中</td>
 </tr>
 <tr>
 <td><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_index" target="_blank" rel="noopener">index</a></td>
-<td>索引全表扫描，把索引从头到尾扫一遍</td>
+<td align="left">索引全表扫描，把索引从头到尾扫一遍</td>
 </tr>
 <tr>
 <td><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_all" target="_blank" rel="noopener">ALL</a></td>
-<td>这个我们接触的最多了，就是全表查询，select * from xxx ，性能最差</td>
+<td align="left">这个我们接触的最多了，就是全表查询，select * from xxx ，性能最差</td>
 </tr>
 </tbody></table>
-<p><img src="/Users/haoxinzhan/Blog/source/_posts/MySQL%E6%85%A2SQL%E4%BC%98%E5%8C%96%E5%AE%9E%E8%B7%B5/640.png" alt="不同type参数执行效率"></p>
+<img src="/2021/08/11/mysql-man-sql-you-hua-shi-jian/640.png" title="不同type参数执行效率">
+
+
+
 </li>
+</ul>
+<ul>
 <li><p>possible_keys参数</p>
 <p><code>possible_keys</code> 表示 MySQL 在查询时, 能够使用到的索引. 注意, 即使有些索引在 <code>possible_keys</code> 中出现, 但是并不表示此索引会真正地被 MySQL 使用到. MySQL 在查询时具体使用了哪些索引, 由 <code>key</code> 字段决定.</p>
 </li>
+</ul>
+<ul>
 <li><p>key参数</p>
 <p>实际使用到的索引，如果为NULL，则没有使用索引 查询中若使用了覆盖索引（查询的列刚好是索引），则该索引仅出现在key列表</p>
 </li>
+</ul>
+<ul>
 <li><p>key_len参数</p>
 <p>表示索引中使用的字节数，可通过该列计算查询中使用的索引的长度。在不损失精确度的情况下，长度越短越好。key_len显示的值为索引字段最大的可能长度，并非实际使用长度 即key_len是根据定义计算而得，不是通过表内检索出的</p>
 </li>
+</ul>
+<ul>
 <li><p>ref参数</p>
 <p>显示索引的哪一列被使用了，如果可能的话，是一个常数，哪些列或常量被用于查找索引列上的值</p>
 </li>
+</ul>
+<ul>
 <li><p>rows参数</p>
 <p>rows 也是一个<strong>重要</strong>的字段. MySQL 查询优化器根据统计信息, 估算 SQL 要查找到结果集需要扫描读取的数据行数.<br>这个值非常直观显示 SQL 的效率好坏, 原则上 rows 越少越好.</p>
 </li>
+</ul>
+<ul>
 <li><p>filtered参数</p>
 <p>通过查询条件查询出来的 SQL 数量占用总行数的比例</p>
 </li>
+</ul>
+<ul>
 <li><p>Extra参数</p>
 <p>更多Extra参数信息见mysql<a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#explain-extra-information" target="_blank" rel="noopener">官方文档</a></p>
 </li>
