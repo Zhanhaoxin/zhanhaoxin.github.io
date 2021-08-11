@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zhanhaoxin.club/"/>
-  <updated>2021-07-27T16:37:12.624Z</updated>
+  <updated>2021-08-11T16:25:27.372Z</updated>
   <id>http://www.zhanhaoxin.club/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MySQL慢SQL优化实践</title>
+    <link href="http://www.zhanhaoxin.club/2021/08/11/mysql-man-sql-you-hua-shi-jian/"/>
+    <id>http://www.zhanhaoxin.club/2021/08/11/mysql-man-sql-you-hua-shi-jian/</id>
+    <published>2021-08-11T11:46:07.000Z</published>
+    <updated>2021-08-11T16:25:27.372Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;MySQL慢SQL优化实践&quot;&gt;&lt;a href=&quot;#MySQL慢SQL优化实践&quot; class=&quot;headerlink&quot; title=&quot;MySQL慢SQL优化实践&quot;&gt;&lt;/a&gt;MySQL慢SQL优化实践&lt;/h1&gt;&lt;h2 id=&quot;一、如何知道哪些SQL是慢SQL&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="数据库" scheme="http://www.zhanhaoxin.club/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    
+      <category term="MySql" scheme="http://www.zhanhaoxin.club/tags/MySql/"/>
+    
+      <category term="数据库" scheme="http://www.zhanhaoxin.club/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+  </entry>
   
   <entry>
     <title>正向代理和反向代理</title>
